@@ -33,16 +33,16 @@
     <main>
         <section id="biodata" class="section">
             <div class="container">
-                <h2>Biodata</h2>
+                <h2 id="view-bio-header">Biodata</h2>
                 <div class="biodata-content">
                     <div class="profile-img-wrapper">
-                        <img src="assets/Foto Profil.png" alt="Foto Profil" class="profile-img" loading="lazy">
+                        <img src="assets/Foto Profil.png" alt="Foto Profil" class="profile-img" id="view-bio-img" loading="lazy">
                     </div>
                     <div class="biodata-text">
-                        <h3 id="typing-name">Rafan Parsa Putra Rustaman</h3>
-                        <h4 id="typing-subtitle">Pelajar</h4>
-                        <p>Halo, perkenalkan saya Rafan Parsa Putra Rustaman, berusia 18 tahun. Saya memiliki ketertarikan yang kuat di bidang organisasi dan aktif terlibat dalam berbagai kepanitiaan sekolah, khususnya di Divisi PDD (Publikasi, Dokumentasi, dan Desain). Saya memiliki keahlian dalam fotografi, videografi, serta desain grafis. Melalui kegiatan tersebut, saya terbiasa membuat berbagai desain publikasi, mendokumentasikan kegiatan, serta mengelola konten visual untuk keperluan acara sekolah. Bagi saya, setiap proyek adalah kesempatan untuk mengembangkan kreativitas, meningkatkan kemampuan teknis, dan memberikan hasil karya terbaik yang bermanfaat bagi banyak orang.</p>
-                        <p><b>"Become the best among the best"</b></p>
+                        <h3 id="typing-name"></h3>
+                        <h4 id="typing-subtitle"></h4>
+                        <div id="view-bio-description"></div>
+                        <p><b id="view-bio-quote"></b></p>
                     </div>
                 </div>
             </div>
@@ -51,23 +51,8 @@
         <section id="pendidikan" class="section">
             <div class="container">
                 <h2>Pendidikan</h2>
-                <div class="skills-container">
-                    <div class="skill-app">
-                        <img src="assets/LOGO KOTA ILMU.jpg" alt="TK" class="app-logo" loading="lazy">
-                        <h3>TK Kota Ilmu</h3>
-                    </div>
-                    <div class="skill-app">
-                        <img src="assets/SDS 2 AL MUHAJIRIN.jpg" alt="SD" class="app-logo" loading="lazy">
-                        <h3>SDS Plus 2 Al-Muhajirin</h3>
-                    </div>
-                    <div class="skill-app">
-                        <img src="assets/SMPS 2 AL-Muhajirin.png" alt="SMP" class="app-logo" loading="lazy">
-                        <h3>SMPS Fullday Al-Muhajirin</h3>
-                    </div>
-                    <div class="skill-app">
-                        <img src="assets/LOGO SMANSA.png" alt="SMA" class="app-logo" loading="lazy">
-                        <h3>SMAN 1 Purwakarta</h3>
-                    </div>
+                <div class="skills-container" id="view-education-list">
+                    <!-- Dinamis -->
                 </div>
             </div>
         </section>
@@ -84,101 +69,10 @@
                     <button class="filter-btn" data-filter="website">Website</button>
                 </div>
                 <div class="projects-container">
-                    <div class="projects-grid">
-                        <div class="project-card" data-category="desain-grafis">
-                            <img src="assets/Design/LOGO CARYA PANDAKARA.png" alt="Logo Acara" class="project-logo-thumbnail" loading="lazy">
-                            <h3>Logo Carya Pandakara</h3>
-                            <p>Desain logo acara untuk Hari Guru 2023 di SMAN 1 Purwakarta.</p>
-                            <a href="#" class="btn detail-btn" data-media="assets/Design/LOGO CARYA PANDAKARA.png" data-type="image">Lihat Detail</a>
-                        </div>
-                        <div class="project-card" data-category="desain-grafis">
-                            <img src="assets/Design/LOGO PORSESA 2023.png" alt="Logo Acara" class="project-logo-thumbnail" loading="lazy">
-                            <h3>Logo Porsesa</h3>
-                            <p>Desain logo acara PORSESA (Pekan Olahraga dan Seni SMANSA) dengan tema "Bersinergi mewujudkan solidaritas dan sportivitas. Melangkah dengan prestasi, bebaskan kreasi bagaikan seni".</p>
-                            <a href="#" class="btn detail-btn" data-media="assets/Design/LOGO PORSESA 2023.png" data-type="image">Lihat Detail</a>
-                        </div>
-                        <div class="project-card" data-category="video">
-                            <video src="assets/Video/MILAD ALMUHAJIRIN.mp4" alt="Dokumentasi Acara" class="project-thumbnail" muted preload="metadata"></video>
-                            <h3>Milad Al-Muhajirin</h3>
-                            <p>Video dokumentasi acara Milad dan Haul Al-Muhajirin</p>
-                            <a href="#" class="btn detail-btn" data-media="assets/Video/MILAD ALMUHAJIRIN.mp4" data-type="video">Lihat Detail</a>
-                        </div>
-                        <div class="project-card" data-category="fotografi">
-                            <img src="assets/Photography/wonderful (8).jpg" alt="Fotografi" class="project-thumbnail" loading="lazy">
-                            <h3>Wonderful Nature of Sumedang</h3>
-                            <p>📍Location : Kampoeng Ciherang, Cijambu, Kec. Tanjungsari, Kabupaten Sumedang, Jawa Barat 45862</p>
-                            <a href="#" class="btn detail-btn" data-media="assets/Photography/wonderful (8).jpg" data-type="image">Lihat Detail</a>
-                        </div>
-                        <div class="project-card" data-category="fotografi">
-                            <img src="assets/Photography/wonderful (3).jpg " alt="Fotografi" class="project-thumbnail" loading="lazy">
-                            <h3>Forest Photography</h3>
-                            <p>📍Location : Kampoeng Ciherang, Cijambu, Kec. Tanjungsari, Kabupaten Sumedang, Jawa Barat 45862.</p>
-                            <a href="#" class="btn detail-btn" data-media="assets/Photography/wonderful (3).jpg" data-type="image">Lihat Detail</a>
-                        </div>
-                        <div class="project-card" data-category="fotografi">
-                            <img src="assets/Photography/active.jpeg" alt="Fotografi Potret" class="project-thumbnail" loading="lazy">
-                            <h3>Traditional Market Activities</h3>
-                            <p>📍Location : Ciamis Traditional Market</p>
-                            <a href="#" class="btn detail-btn" data-media="assets/Photography/active.jpeg" data-type="image">Lihat Detail</a>
-                        </div>
-                        <div class="project-card" data-category="website">
-                            <img src="assets/Website/Website Kabinet OSIS-BPHPK Periode 24-25.png" alt="Website" class="project-thumbnail" loading="lazy">
-                            <h3>Website Kabinet OSIS-BPHPK Periode 24-25</h3>
-                            <p>Saya bersama Kementerian 9 Periode 24-25 merancang Website Kabinet OSIS-BPHPK Periode 24-25 dengan tampilan modern serta interaktif</p>
-                            <a href="https://osisbphpksmansa.org/" class="btn" target="_blank">Lihat Detail</a>
-                        </div>
-                        <div class="project-card" data-category="website">
-                            <img src="assets/Website/Website Portofolio V1.png" alt="Website Toko Online" class="project-thumbnail" loading="lazy">
-                            <h3>Website Portofolio V1</h3>
-                            <p>Desain dan pengembangan website portofolio dengan tampilan yang masih sederhana.</p>
-                            <a href="https://rafanparsa.netlify.app/" class="btn" target="_blank">Lihat Detail</a>
-                        </div>
-                        <div class="project-card" data-category="desain-grafis">
-                            <img src="assets/Design/Jarah The Movie.png" alt="Logo Acara" class="project-thumbnail" loading="lazy">
-                            <h3>Desain Feed Coming Soon Jarah the Movie</h3>
-                            <p>Desain Feed Coming Soon Jarah the Movie </p>
-                            <a href="#" class="btn detail-btn" data-media="assets/Design/Jarah The Movie.png" data-type="image">Lihat Detail</a>
-                        </div>
-                        <div class="project-card" data-category="desain-grafis">
-                            <img src="assets/Design/BANNER GTC GO.png" alt="Banner Acara" class="project-thumbnail" loading="lazy">
-                            <h3>Banner Go To Campus (GO)</h3>
-                            <p>Banner Go To Campus yang diadakan oleh Ganesha Operation cabang Purwakarta, Subang, Cikampek. </p>
-                            <a href="#" class="btn detail-btn" data-media="assets/Design/BANNER GTC GO.png" data-type="image">Lihat Detail</a>
-                        </div>
-                        <div class="project-card" data-category="desain-grafis">
-                            <img src="assets/Design/Hari Sumpah Pemuda.png" alt="Poster Acara" class="project-thumbnail" loading="lazy">
-                            <h3>Poster Peringatan Hari Sumpah Pemuda</h3>
-                            <p>Poster Peringatan Hari Sumpah Pemuda 28 Oktober 2023 </p>
-                            <a href="#" class="btn detail-btn" data-media="assets/Design/Hari Sumpah Pemuda.png" data-type="image">Lihat Detail</a>
-                        </div>
-                        <div class="project-card" data-category="video">
-                            <video src="assets/Video/OBSERVASI KESIAPAN BELAJAR.mp4" alt="Dokumentasi Acara" class="project-thumbnail" muted preload="metadata"></video>
-                            <h3>Observasi Kesiapan Belajar</h3>
-                            <p>Video dokumentasi Observasi Kesiapan Belajar SMPS 2 Al-Muhajirin</p>
-                            <a href="#" class="btn detail-btn" data-media="assets/Video/OBSERVASI KESIAPAN BELAJAR.mp4" data-type="video">Lihat Detail</a>
-                        </div>
-                        <div class="project-card" data-category="video">
-                            <video src="assets/Video/FULLDAY FEST.mp4" alt="Dokumentasi Acara" class="project-thumbnail" muted preload="metadata"></video>
-                            <h3>Fullday Fest</h3>
-                            <p>Video dokumentasi Fullday Fest SMPS 2 Al-Muhajirin</p>
-                            <a href="#" class="btn detail-btn" data-media="assets/Video/FULLDAY FEST.mp4" data-type="video">Lihat Detail</a>
-                        </div>
-                        <div class="project-card" data-category="fotografi">
-                            <img src="assets/Photography/IMG_7040.JPG " alt="Fotografi" class="project-thumbnail" loading="lazy">
-                            <h3>Bupati Purwakarta Periode 2018-2023</h3>
-                            <p>Foto Bupati Purwakarta Periode 2018-2023 di Milad Al-Muhajirin.</p>
-                            <a href="#" class="btn detail-btn" data-media="assets/Photography/IMG_7040.JPG" data-type="image">Lihat Detail</a>
-                        </div>
-                        <div class="project-card" data-category="fotografi">
-                            <img src="assets/Photography/IMG_7050.JPG " alt="Fotografi" class="project-thumbnail" loading="lazy">
-                            <h3>Pemilik Yayasan Al-Muhajirin</h3>
-                            <p>K.H Abun Bunyamin,MA. selaku pemilik Yayasan Al-Muhajirin di Milad Al-Muhajirin.</p>
-                            <a href="#" class="btn detail-btn" data-media="assets/Photography/IMG_7050.JPG" data-type="image">Lihat Detail</a>
-                        </div>
+                    <div class="projects-grid" id="view-projects-grid">
+                        <!-- Dinamis -->
                     </div>
-                    <div class="pagination" id="projects-pagination">
-                        <!-- Pagination buttons will be generated by JS -->
-                    </div>
+                    <div class="pagination" id="projects-pagination"></div>
                 </div>
             </div>
         </section>
@@ -187,105 +81,8 @@
             <div class="container">
                 <h2>Pencapaian Saya</h2>
                 <p>Riwayat kepanitiaan dan pengalaman saya dalam berbagai kegiatan organisasi sekolah.</p>
-                <div class="journey-timeline">
-                    <div class="timeline-item left">
-                        <div class="timeline-date">23 Oktober 2021</div>
-                        <div class="timeline-content">
-                            <h3>Sekbid Dokumentasi OSIS SMPS 2 Al-Muhajirin Periode 2021/2022</h3>
-                            <p>Saya terpilih menjadi Anggota OSIS SMPS 2 Al-Muhajirin Periode 2021/2022. Saya ditempatkan di Divisi Dokumentasi, tugas saya adalah mengabadikan setiap kegiatan OSIS dan sekolah melalui foto maupun video, serta membantu dalam pembuatan laporan dan publikasi kegiatan.</p>
-                        </div>
-                    </div>
-                    <div class="timeline-item right">
-                        <div class="timeline-date">13 September 2022</div>
-                        <div class="timeline-content">
-                            <h3>Wakil Ketua OSIS SMPS 2 Al-Muhajirin Periode 2022/2023</h3>
-                            <p>Saya terpilih menjadi Wakil Ketua OSIS SMPS 2 Al-Muhajirin Periode 2022/2023. Saya merasa sangat bersyukur dan bangga atas kepercayaan yang diberikan kepada saya. Jabatan ini bukan hanya sebuah kehormatan, tetapi juga tanggung jawab besar untuk menjadi teladan bagi teman-teman dan membantu menjalankan berbagai program sekolah.</p>
-                        </div>
-                    </div>
-                    <div class="timeline-item left">
-                        <div class="timeline-date">16 Oktober 2023</div>
-                        <div class="timeline-content">
-                            <h3>Deputi 2 Kementerian 9 (Teknologi Informasi & Komunikasi)</h3>
-                            <p>Saya terpilih menjadi Anggota OSIS SMAN 1 Purwakarta Periode 2023/2024. Saya menjabat sebagai Deputi 2 Kementerian 9 (Teknologi Informasi & Komunikasi).Sebagai Deputi 2 di Kementerian 9 (Teknologi Informasi & Komunikasi), saya bertanggung jawab untuk membantu menteri dalam mengelola informasi, media digital, dan berbagai kebutuhan teknologi yang mendukung kegiatan OSIS maupun sekolah. Melalui jabatan ini, saya belajar banyak tentang manajemen data, komunikasi digital, serta pentingnya kolaborasi dalam tim.</p>
-                        </div>
-                    </div>
-                    <div class="timeline-item right">
-                        <div class="timeline-date">17 November 2023</div>
-                        <div class="timeline-content">
-                            <h3>Panitia Carya Pandakara SMAN 1 Purwakarta</h3>
-                            <p>Saya terpilih menjadi Panitia Carya Pandakara SMAN 1 Purwakarta. Event Carya Pandakara merupakan acara tahunan dalam rangka memperingati Hari Guru di SMAN 1 Purwakarta. Saya ditempatkan di posisi Divisi PDD (Publikasi, Dekorasi, dan Dokumentasi). Sebagai bagian dari Divisi PDD, saya bertugas untuk membantu mendesain dekorasi acara, membuat publikasi melalui media sosial, serta mendokumentasikan seluruh rangkaian kegiatan. Saya merasa bangga dapat berkontribusi dalam kegiatan yang penuh makna ini sebagai bentuk apresiasi kepada para guru yang telah berjasa dalam dunia pendidikan.</p>
-                        </div>
-                    </div>
-                    <div class="timeline-item left">
-                        <div class="timeline-date">7 Desember 2023</div>
-                        <div class="timeline-content">
-                            <h3>Panitia Porsesa 2023</h3>
-                            <p>Saya terpilih menjadi Panitia Porsesa (Pekan Olahraga dan Seni SMAN 1 Purwakarta). Saya ditempatkan di posisi Divisi PDD (Publikasi, Dekorasi, dan Dokumentasi) yang beranggotakan 6 orang. Sebagai bagian dari Divisi PDD, kami bekerja sama dalam mengatur desain dekorasi acara, membuat publikasi kegiatan melalui berbagai media, serta mendokumentasikan seluruh momen selama pelaksanaan Porsesa. Dengan jumlah anggota yang solid, kami saling berbagi tugas dan mendukung satu sama lain agar acara berjalan lancar dan menarik. Pengalaman ini mengajarkan saya arti penting kerja sama tim, tanggung jawab, dan kreativitas dalam menyukseskan sebuah kegiatan besar di sekolah.</p>
-                        </div>
-                    </div>
-                    <div class="timeline-item right">
-                        <div class="timeline-date">9 Maret 2024</div>
-                        <div class="timeline-content">
-                            <h3>Panitia Go To Campus GOTEN</h3>
-                            <p>Saya dipercaya oleh Ganesha Operation Cabang Purwakarta, Subang, dan Cikampek sebagai Panitia Go To Campus GOTEN. Acara Go To Campus GOTEN merupakan kegiatan kunjungan edukatif ke kampus, dengan tujuan Institut Teknologi Bandung (ITB) dan Universitas Padjadjaran (UNPAD). Nama GOTEN sendiri merupakan singkatan dari GO 10, yaitu kegiatan yang diikuti oleh seluruh siswa kelas 10 Ganesha Operation pada saat itu. Saya ditempatkan di Divisi PDD (Publikasi, Dekorasi, dan Dokumentasi). Sebagai anggota Divisi PDD, saya bertanggung jawab untuk mendokumentasikan seluruh rangkaian kegiatan, membuat publikasi yang menarik, serta membantu menyiapkan kebutuhan visual selama acara berlangsung. Melalui kegiatan ini, saya mendapatkan banyak pengalaman berharga, terutama dalam hal kerja sama, tanggung jawab, dan kemampuan komunikasi. Saya merasa bangga dapat menjadi bagian dari kegiatan yang tidak hanya menyenangkan, tetapi juga memberikan wawasan baru mengenai dunia perkuliahan bagi para peserta.</p>
-                        </div>
-                    </div>
-                    <div class="timeline-item left">
-                        <div class="timeline-date">20 Mei 2024</div>
-                        <div class="timeline-content">
-                            <h3>Member Geo Nusantara</h3>
-                            <p>Saya keterima di salah satu komunitas fotografi terbesar di Indonesia, yaitu Geo Nusantara. Geonusantara merupakan komunitas fotografi yang bermula di Instagram dan beranggotakan Warga Negara Indonesia yang mempunyai kecintaan yang kuat terhadap Indonesia. Member Geonusantara disebut sebagai Keluarga Geonusantara untuk menjalin persatuan antar anggota, intimasi dan rasa memiliki, serta untuk membina solidaritas sesama penggemar fotografi.</p>
-                        </div>
-                    </div>
-                    <div class="timeline-item right">
-                        <div class="timeline-date">9 Juni 2024</div>
-                        <div class="timeline-content">
-                            <h3>Panitia PLS 27</h3>
-                            <p>Saya terpilih menjadi Panitia PLS (Pengenalan Lingkungan Sekolah) SMAN 1 Purwakarta Angkatan 27. Saya ditempatkan di Divisi PDD (Publikasi, Dekorasi, dan Dokumentasi). Sebagai bagian dari Divisi PDD, saya bertugas untuk mendokumentasikan seluruh rangkaian kegiatan PLS, membuat publikasi berupa desain dan konten media, serta menata dekorasi agar suasana kegiatan menjadi menarik dan menyambut bagi para peserta didik baru. Melalui pengalaman ini, saya belajar pentingnya kerja sama tim, kedisiplinan, and tanggung jawab dalam menyukseskan acara besar sekolah. Saya merasa bangga dapat berkontribusi dalam menyambut and memperkenalkan lingkungan sekolah kepada siswa baru Angkatan 27 SMAN 1 Purwakarta.</p>
-                        </div>
-                    </div>
-                    <div class="timeline-item left">
-                        <div class="timeline-date">21 Oktober 2024</div>
-                        <div class="timeline-content">
-                            <h3>Menteri Kementerian 9 (Teknologi Informasi & Komunikasi)</h3>
-                            <p>Saya terpilih menjadi Anggota OSIS SMAN 1 Purwakarta Periode 2024/2025. Saya menjabat sebagai Menteri Kementerian 9 (Teknologi Informasi & Komunikasi). Saya merasa sangat bersyukur and bangga atas kepercayaan yang diberikan untuk memimpin kementerian ini. Sebagai Menteri Kementerian 9, saya bertanggung jawab dalam mengelola sistem informasi, merancang wajah kabinet, mengelola media digital, serta seluruh aspek teknologi yang mendukung kegiatan OSIS dan sekolah. Bersama tim, saya berkomitmen untuk menghadirkan inovasi digital yang bermanfaat, memperkuat komunikasi antaranggota OSIS, dan meningkatkan citra sekolah melalui media berbasis teknologi. Melalui amanah ini, saya belajar tentang kepemimpinan, koordinasi tim, dan pentingnya berpikir kreatif serta solutif dalam menghadapi berbagai tantangan di era digital. Saya berharap dapat memberikan kontribusi terbaik bagi OSIS dan SMAN 1 Purwakarta.</p>
-                        </div>
-                    </div>
-                    <div class="timeline-item right">
-                        <div class="timeline-date">23 Oktober 2024</div>
-                        <div class="timeline-content">
-                            <h3>Panitia Lokasa Anankara</h3>
-                            <p>Saya terpilih menjadi Panitia Lokasa Anankara. Event Lokasa Anankara merupakan kegiatan dalam rangka memperingati Bulan Bahasa di SMAN 1 Purwakarta. Saya ditempatkan di Divisi PDD (Publikasi, Dekorasi, dan Dokumentasi). Sebagai bagian dari Divisi PDD, saya bertugas untuk mendokumentasikan seluruh kegiatan, menyiapkan dekorasi yang sesuai dengan tema acara, serta membuat publikasi agar kegiatan ini dapat dikenal dan diingat oleh seluruh warga sekolah. Melalui peran ini, saya belajar untuk lebih kreatif, teliti, dan mampu bekerja sama dengan tim dalam waktu yang terbatas. Saya merasa bangga dapat berpartisipasi dalam kegiatan yang menumbuhkan semangat literasi dan kecintaan terhadap bahasa.</p>
-                        </div>
-                    </div>
-                    <div class="timeline-item left">
-                        <div class="timeline-date">4 Desember 2024</div>
-                        <div class="timeline-content">
-                            <h3>Panitia Porsesa 24</h3>
-                            <p>Saya terpilih menjadi Panitia Porsesa 2024 (Pekan Olahraga dan Seni SMANSA). Saya ditempatkan di Divisi Peralatan. Sebagai bagian dari Divisi Peralatan, saya bertanggung jawab untuk menyiapkan, mengatur, and memastikan seluruh perlengkapan yang dibutuhkan selama kegiatan Porsesa tersedia dengan baik. Divisi kami berperan penting dalam menjaga kelancaran jalannya acara, mulai dari persiapan, pelaksanaan, hingga penutupan kegiatan. Melalui pengalaman ini, saya belajar arti pentingnya tanggung jawab, kerja sama tim, and ketelitian dalam mengelola kebutuhan teknis di lapangan. Saya merasa bangga dapat berkontribusi dalam menyukseskan acara besar yang menjadi ajang pengembangan bakat and semangat sportivitas siswa SMAN 1 Purwakarta.</p>
-                        </div>
-                    </div>
-                    <div class="timeline-item right">
-                        <div class="timeline-date">23 Januari 2025</div>
-                        <div class="timeline-content">
-                            <h3>Panitia Isra Mi’raj</h3>
-                            <p>Saya terpilih menjadi Panitia Isra Mi’raj SMAN 1 Purwakarta. Saya ditempatkan di Divisi PDD (Publikasi, Dekorasi, dan Dokumentasi). Sebagai anggota Divisi PDD, saya bertugas untuk menyiapkan dekorasi yang sesuai dengan tema acara, membuat publikasi kegiatan, serta mendokumentasikan seluruh rangkaian acara Isra Mi’raj. Melalui kegiatan ini, saya belajar untuk bekerja dengan penuh tanggung jawab, mengasah kreativitas dalam desain, serta menjaga kekompakan bersama anggota panitia lainnya. Saya merasa bangga dapat berpartisipasi dalam kegiatan keagamaan yang penuh makna ini, sebagai bentuk penghormatan and peningkatan keimanan bagi seluruh warga sekolah.</p>
-                        </div>
-                    </div>
-                    <div class="timeline-item left">
-                        <div class="timeline-date">14 Juli 2025</div>
-                        <div class="timeline-content">
-                            <h3>Panitia PLS 28</h3>
-                            <p>Saya terpilih menjadi Panitia PLS (Pengenalan Lingkungan Sekolah) SMAN 1 Purwakarta Angkatan 28. Saya ditempatkan di Divisi PDD (Publikasi, Dekorasi, dan Dokumentasi). Sebagai bagian dari Divisi PDD, saya bertugas untuk mendokumentasikan seluruh rangkaian kegiatan PLS, membuat publikasi berupa desain and konten media, serta menata dekorasi agar suasana kegiatan menjadi menarik and menyambut bagi para peserta didik baru. Melalui pengalaman ini, saya belajar pentingnya kerja sama tim, kedisiplinan, and tanggung jawab dalam menyukseskan acara besar sekolah. Saya merasa bangga dapat berkontribusi dalam menyambut and memperkenalkan lingkungan sekolah kepada siswa baru Angkatan 28 SMAN 1 Purwakarta.</p>
-                        </div>
-                    </div>
-                    <div class="timeline-item right">
-                        <div class="timeline-date">2 Agustus 2025</div>
-                        <div class="timeline-content">
-                            <h3>Panitia Mardhikapraja</h3>
-                            <p>Saya terpilih menjadi Panitia Mardhikapraja. Event Mardhikapraja merupakan kegiatan dalam rangka memperingati Hari Kemerdekaan Indonesia. Dalam event ini terdapat berbagai mata lomba yang menarik, salah satunya adalah POSTECHSA (Poster Technology SMANSA) — lomba hasil kolaborasi antara Kementerian 9 (Teknologi Informasi & Komunikasi) and Kementerian 2 (Kewirausahaan). POSTECHSA merupakan lomba poster digital yang diselenggarakan untuk memperingati Hari Teknologi Nasional (10 Agustus) and Hari Kemerdekaan Republik Indonesia (17 Agustus). Lomba ini bertujuan untuk menumbuhkan semangat nasionalisme, kreativitas, serta inovasi digital di kalangan SmansaZen sebagai generasi penerus bangsa. Saya dipercaya untuk menjadi Koordinator Lomba POSTECHSA. Sebagai koordinator, saya bertanggung jawab dalam mengatur jalannya lomba mulai dari perencanaan konsep, publikasi, teknis pengumpulan karya, hingga penilaian akhir. Melalui pengalaman ini, saya belajar banyak tentang kepemimpinan, manajemen waktu, serta koordinasi lintas kementerian dalam menjalankan sebuah kegiatan besar. Saya merasa bangga dapat berperan aktif dalam kegiatan yang tidak hanya memperingati kemerdekaan, tetapi juga mengasah kreativitas and semangat inovasi siswa SMAN 1 Purwakarta.</p>
-                        </div>
-                    </div>
+                <div class="journey-timeline" id="view-achievements-timeline">
+                    <!-- Dinamis -->
                 </div>
                 <div class="journey-load-more">
                     <button id="load-more-journey" class="btn">Pelajari Lebih Lanjut</button>
@@ -296,22 +93,8 @@
         <section id="skills" class="section">
             <div class="container">
                 <h2>Keterampilan Aplikasi</h2>
-                <div class="skills-container">
-                    <div class="skill-app">
-                        <img src="assets/Canva.png" alt="Canva" class="app-logo" loading="lazy">
-                    </div>
-                    <div class="skill-app">
-                        <img src="assets/Logo VSC.gif" alt="Visual Studio Code" class="app-logo" loading="lazy">
-                    </div>
-                    <div class="skill-app">
-                        <img src="assets/Logo Lightroom.jpg" alt="Lightroom" class="app-logo" loading="lazy">
-                    </div>
-                    <div class="skill-app">
-                        <img src="assets/Logo Capcut.jpg" alt="CapCut" class="app-logo" loading="lazy">
-                    </div>
-                    <div class="skill-app">
-                        <img src="assets/Logo Adobe Premire Pro.jpg" alt="Adobe Premiere Pro" class="app-logo" loading="lazy">
-                    </div>
+                <div class="skills-container" id="view-skills-list">
+                    <!-- Dinamis -->
                 </div>
             </div>
         </section>
@@ -319,13 +102,8 @@
         <section id="dokumentasi" class="section">
             <div class="container">
                 <h2>Dokumentasi</h2>
-                <div class="certificates-grid">
-                    <div class="certificate-card">
-                        <img src="assets/Dokumentasi/IMG_9727.JPG" alt="Dokumentasi Upacara" class="project-thumbnail" loading="lazy">
-                        <h3>GO Awards 2024</h3>
-                        <p>9 Juni 2024</p>
-                        <a href="https://drive.google.com/drive/folders/1VHaWl_IvOabNV7eTSaRTm8fd1bYLgIn_?usp=drive_link" class="btn" target="_blank">Lihat Dokumentasi</a>
-                    </div>
+                <div class="certificates-grid" id="view-documentation-grid">
+                    <!-- Dinamis -->
                 </div>
             </div>
         </section>
@@ -335,32 +113,8 @@
                 <div class="contact-combined-container">
                     <div class="contact-left">
                         <h3>Kontak</h3>
-                        <div class="social-links-vertical">
-                            <a href="https://instagram.com/rapant8" target="_blank" class="btn social-icon-link" aria-label="Instagram">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                                </svg>
-                                <span>Instagram</span>
-                            </a>
-                            <a href="https://tiktok.com/@rapant8._" target="_blank" class="btn social-icon-link" aria-label="TikTok">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                    <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/>
-                                </svg>
-                                <span>TikTok</span>
-                            </a>
-                            <a href="https://linktr.ee/rafanparsa" target="_blank" class="btn social-icon-link" aria-label="Linktree">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                    <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
-                                    <rect x="11" y="21" width="2" height="3" rx="1"/>
-                                </svg>
-                                <span>Linktree</span>
-                            </a>
-                            <a href="mailto:rafanparsa1@gmail.com" class="btn social-icon-link" aria-label="Google">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                    <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
-                                </svg>
-                                <span>Email</span>
-                            </a>
+                        <div class="social-links-vertical" id="view-contacts-list">
+                            <!-- Dinamis -->
                         </div>
                     </div>
                     <div class="comments-right">
@@ -376,7 +130,6 @@
                                 <button type="submit" class="btn">Kirim Komentar</button>
                             </form>
                             <div id="comment-list" class="comment-list">
-                                <!-- Komentar akan muncul di sini -->
                                 <p class="loading-comments">Memuat komentar...</p>
                             </div>
                         </div>

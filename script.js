@@ -1,399 +1,304 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const typingName = document.getElementById('typing-name');
-  const typingSubtitle = document.getElementById('typing-subtitle');
-  const nameText = "Rafan Parsa Putra Rustamann";
-  let currentSubtitle = "Pelajarr";
-  let subtitleTexts = ["Pelajar", "Freelance"];
-  let nameIndex = 0;
-  let subtitleIndex = 0;
-  let nameForward = true;
-  let subtitleForward = true;
-  let subtitleStarted = false;
+  // --- DYNAMIC CONTENT FETCHING ---
+  const PROD_URL = 'https://backend-rapanportofolio.vercel.app/api'; 
+  const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
+                  ? 'http://localhost:5000/api' 
+                  : PROD_URL;
 
-  function typeName() {
-    if (nameForward) {
-      nameIndex++;
-      if (nameIndex === nameText.length) {
-        nameForward = false;
-        if (!subtitleStarted) {
-          subtitleStarted = true;
-          typeSubtitle(); // Start subtitle when name is full first time
-        }
-        setTimeout(typeName, 1000); // Pause at full text
-        return;
-      }
-    } else {
-      nameIndex--;
-      if (nameIndex === 0) {
-        nameForward = true;
-        setTimeout(typeName, 500); // Pause at empty text
-        return;
-      }
-    }
-    typingName.innerHTML = nameText.substring(0, nameIndex) + '<span class="typing-cursor">|</span>';
-    setTimeout(typeName, 150);
-  }
-
-  function typeSubtitle() {
-    if (subtitleForward) {
-      subtitleIndex++;
-      if (subtitleIndex === currentSubtitle.length) {
-        subtitleForward = false;
-        setTimeout(typeSubtitle, 1000); // Pause at full text
-        return;
-      }
-    } else {
-      subtitleIndex--;
-      if (subtitleIndex === 0) {
-        // Switch to the other subtitle
-        currentSubtitle = currentSubtitle === "Pelajarr" ? "Freelancee" : "Pelajarr";
-        subtitleForward = true;
-        setTimeout(typeSubtitle, 500); // Pause at empty text
-        return;
-      }
-    }
-    typingSubtitle.innerHTML = currentSubtitle.substring(0, subtitleIndex) + '<span class="typing-cursor">|</span>';
-    setTimeout(typeSubtitle, 150);
-  }
-
-  typeName();
-
-  // Handle image/video fade-in after load
-  const mediaElements = document.querySelectorAll('img, video');
-  mediaElements.forEach(media => {
-    if (media.complete) {
-      media.classList.add('loaded');
-    } else {
-      media.addEventListener('load', () => media.classList.add('loaded'));
-      media.addEventListener('loadeddata', () => media.classList.add('loaded')); // for videos
-    }
-  });
-
-  // Project Filter & Pagination Functionality
-  const filterButtons = document.querySelectorAll('.filter-btn');
-  const projectCards = Array.from(document.querySelectorAll('.project-card'));
-  const paginationContainer = document.getElementById('projects-pagination');
-  const itemsPerPage = 9;
-  let currentPage = 1;
-  let currentFilter = 'semua';
-
-  function updateProjects() {
-    const filteredCards = projectCards.filter(card => {
-      const category = card.getAttribute('data-category');
-      return currentFilter === 'semua' || category === currentFilter;
-    });
-
-    const totalPages = Math.ceil(filteredCards.length / itemsPerPage);
-    
-    // Ensure currentPage is valid
-    if (currentPage > totalPages && totalPages > 0) currentPage = totalPages;
-    if (currentPage < 1) currentPage = 1;
-
-    // Show/Hide cards based on current page
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
-
-    projectCards.forEach(card => {
-      card.style.display = 'none';
-      card.style.opacity = '0';
-      card.style.transform = 'scale(0.8)';
-    });
-
-    filteredCards.forEach((card, index) => {
-      if (index >= startIndex && index < endIndex) {
-        card.style.display = 'block';
-        setTimeout(() => {
-          card.style.opacity = '1';
-          card.style.transform = 'scale(1)';
-        }, 10);
-      }
-    });
-
-    renderPagination(totalPages);
-  }
-
-  function renderPagination(totalPages) {
-    paginationContainer.innerHTML = '';
-    if (totalPages <= 1) return;
-
-    // First page button
-    const firstBtn = createPaginationBtn('«', () => {
-      currentPage = 1;
-      updateProjects();
-      scrollToProjects();
-    }, currentPage === 1);
-    paginationContainer.appendChild(firstBtn);
-
-    // Prev button
-    const prevBtn = createPaginationBtn('‹', () => {
-      if (currentPage > 1) {
-        currentPage--;
-        updateProjects();
-        scrollToProjects();
-      }
-    }, currentPage === 1);
-    paginationContainer.appendChild(prevBtn);
-
-    // Page numbers
-    for (let i = 1; i <= totalPages; i++) {
-      const pageBtn = createPaginationBtn(i, () => {
-        currentPage = i;
-        updateProjects();
-        scrollToProjects();
-      }, false, i === currentPage);
-      paginationContainer.appendChild(pageBtn);
-    }
-
-    // Next button
-    const nextBtn = createPaginationBtn('›', () => {
-      if (currentPage < totalPages) {
-        currentPage++;
-        updateProjects();
-        scrollToProjects();
-      }
-    }, currentPage === totalPages);
-    paginationContainer.appendChild(nextBtn);
-
-    // Last page button
-    const lastBtn = createPaginationBtn('»', () => {
-      currentPage = totalPages;
-      updateProjects();
-      scrollToProjects();
-    }, currentPage === totalPages);
-    paginationContainer.appendChild(lastBtn);
-  }
-
-  function createPaginationBtn(text, onClick, disabled, active = false) {
-    const btn = document.createElement('button');
-    btn.className = `pagination-btn ${active ? 'active' : ''}`;
-    btn.innerHTML = text;
-    btn.disabled = disabled;
-    btn.addEventListener('click', onClick);
-    return btn;
-  }
-
-  function scrollToProjects() {
-    document.getElementById('projects').scrollIntoView({ behavior: 'smooth' });
-  }
-
-  filterButtons.forEach(button => {
-    button.addEventListener('click', () => {
-      currentFilter = button.getAttribute('data-filter');
-      currentPage = 1;
-
-      // Update active button
-      filterButtons.forEach(btn => btn.classList.remove('active'));
-      button.classList.add('active');
-
-      updateProjects();
-    });
-  });
-
-  // Initial call
-  updateProjects();
-
-  // Media Modal Functionality
-  const modal = document.getElementById('mediaModal');
-  const modalImage = document.getElementById('modalImage');
-  const modalVideo = document.getElementById('modalVideo');
-  const closeModal = document.querySelector('.close-modal');
-  const detailBtns = document.querySelectorAll('.detail-btn');
-
-  detailBtns.forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      const mediaSrc = btn.getAttribute('data-media');
-      const mediaType = btn.getAttribute('data-type');
-
-      if (mediaType === 'image') {
-        modalImage.src = mediaSrc;
-        modalImage.style.display = 'block';
-        modalVideo.style.display = 'none';
-      } else if (mediaType === 'video') {
-        modalVideo.querySelector('source').src = mediaSrc;
-        modalVideo.load();
-        modalVideo.style.display = 'block';
-        modalImage.style.display = 'none';
-      }
-
-      modal.style.display = 'block';
-    });
-  });
-
-  closeModal.addEventListener('click', () => {
-    modal.style.display = 'none';
-    modalVideo.pause();
-  });
-
-  window.addEventListener('click', (e) => {
-    if (e.target === modal) {
-      modal.style.display = 'none';
-      modalVideo.pause();
-    }
-  });
-
-  // Prevent modal close when clicking inside modal content
-  document.querySelector('.modal-content').addEventListener('click', (e) => {
-    e.stopPropagation();
-  });
-
-  // Mobile Navbar Toggle
-  const hamburger = document.querySelector('.hamburger');
-  const navMenu = document.querySelector('.nav-menu');
-
-  if (hamburger && navMenu) {
-    hamburger.addEventListener('click', () => {
-      hamburger.classList.toggle('active');
-      navMenu.classList.toggle('active');
-    });
-
-    // Close menu when clicking on a link
-    navMenu.addEventListener('click', (e) => {
-      if (e.target.tagName === 'A') {
-        hamburger.classList.remove('active');
-        navMenu.classList.remove('active');
-      }
-    });
-  }
-
-  // Journey "Load More" Functionality
-  const journeyItems = document.querySelectorAll('.timeline-item');
-  const loadMoreBtn = document.getElementById('load-more-journey');
-  const itemsPerLoad = 5;
-  let visibleItemsCount = itemsPerLoad;
-
-  function updateJourneyVisibility() {
-    journeyItems.forEach((item, index) => {
-      if (index < visibleItemsCount) {
-        item.style.display = 'block';
-        setTimeout(() => {
-          item.style.opacity = '1';
-          item.style.transform = 'translateY(0)';
-        }, 10);
-      } else {
-        item.style.display = 'none';
-        item.style.opacity = '0';
-        item.style.transform = 'translateY(20px)';
-      }
-    });
-
-    // Toggle button text and functionality
-    if (visibleItemsCount >= journeyItems.length) {
-      loadMoreBtn.innerText = 'Tampilkan Lebih Sedikit';
-    } else {
-      loadMoreBtn.innerText = 'Pelajari Lebih Lanjut';
-    }
-  }
-
-  if (loadMoreBtn) {
-    loadMoreBtn.addEventListener('click', () => {
-      if (visibleItemsCount >= journeyItems.length) {
-        // Collapse logic
-        visibleItemsCount = itemsPerLoad;
-        updateJourneyVisibility();
-        document.getElementById('journey').scrollIntoView({ behavior: 'smooth' });
-      } else {
-        // Expand logic
-        const prevCount = visibleItemsCount;
-        visibleItemsCount += itemsPerLoad;
-        updateJourneyVisibility();
+  async function loadPortfolioData() {
+    try {
+      // 1. Fetch Biodata
+      const bioRes = await fetch(`${API_URL}/biodata`);
+      const bioData = await bioRes.json();
+      if (bioData.length > 0) {
+        const bio = bioData[0];
+        document.getElementById('view-bio-header').innerText = bio.name ? 'Biodata' : '';
+        document.getElementById('view-bio-img').src = bio.profileImg || 'assets/Foto Profil.png';
+        document.getElementById('view-bio-description').innerHTML = `<p>${bio.description || ''}</p>`;
+        document.getElementById('view-bio-quote').innerText = bio.quote ? `"${bio.quote}"` : '';
         
-        // Scroll to the first newly shown item
-        const firstNewItem = journeyItems[prevCount];
-        if (firstNewItem) {
-          firstNewItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
+        // Typing Effect Setup (Re-run with new data)
+        initTypingEffect(bio.name || "Rafan Parsa Putra Rustaman", bio.subtitle || "Pelajar");
       }
-    });
 
-    // Initial call
-    updateJourneyVisibility();
+      // 2. Fetch Education
+      const eduRes = await fetch(`${API_URL}/education`);
+      const eduData = await eduRes.json();
+      const eduList = document.getElementById('view-education-list');
+      eduList.innerHTML = eduData.map(edu => `
+        <div class="skill-app">
+          <img src="${edu.logo}" alt="${edu.level}" class="app-logo loaded" loading="lazy">
+          <h3>${edu.schoolName}</h3>
+        </div>
+      `).join('');
+
+      // 3. Fetch Projects
+      const projRes = await fetch(`${API_URL}/projects`);
+      const projData = await projRes.json();
+      renderProjects(projData);
+
+      // 4. Fetch Achievements
+      const achRes = await fetch(`${API_URL}/achievements`);
+      const achData = await achRes.json();
+      const achTimeline = document.getElementById('view-achievements-timeline');
+      achTimeline.innerHTML = achData.map(ach => `
+        <div class="timeline-item ${ach.side || 'left'}">
+          <div class="timeline-date">${ach.date}</div>
+          <div class="timeline-content">
+            <h3>${ach.title}</h3>
+            <p>${ach.description}</p>
+          </div>
+        </div>
+      `).join('');
+      initJourneyLoadMore();
+
+      // 5. Fetch Skills
+      const skillRes = await fetch(`${API_URL}/skills`);
+      const skillData = await skillRes.json();
+      const skillList = document.getElementById('view-skills-list');
+      skillList.innerHTML = skillData.map(s => `
+        <div class="skill-app">
+          <img src="${s.logo}" alt="${s.name}" class="app-logo loaded" loading="lazy">
+        </div>
+      `).join('');
+
+      // 6. Fetch Documentation
+      const docRes = await fetch(`${API_URL}/documentation`);
+      const docData = await docRes.json();
+      const docGrid = document.getElementById('view-documentation-grid');
+      docGrid.innerHTML = docData.map(doc => `
+        <div class="certificate-card">
+          <img src="${doc.imgUrl}" alt="${doc.title}" class="project-thumbnail loaded" loading="lazy">
+          <h3>${doc.title}</h3>
+          <p>${doc.date}</p>
+          <a href="${doc.link}" class="btn" target="_blank">Lihat Dokumentasi</a>
+        </div>
+      `).join('');
+
+      // 7. Fetch Contacts
+      const contactRes = await fetch(`${API_URL}/contacts`);
+      const contactData = await contactRes.json();
+      const contactList = document.getElementById('view-contacts-list');
+      contactList.innerHTML = contactData.map(c => `
+        <a href="${c.url}" target="_blank" class="btn social-icon-link" aria-label="${c.platform}">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="${c.iconSvg}"/>
+          </svg>
+          <span>${c.label}</span>
+        </a>
+      `).join('');
+
+    } catch (err) { console.error("Error loading dynamic content:", err); }
   }
 
-  // Smooth Scroll for Navigation
+  function initTypingEffect(nameText, currentSubtitle) {
+    const typingName = document.getElementById('typing-name');
+    const typingSubtitle = document.getElementById('typing-subtitle');
+    if (!typingName || !typingSubtitle) return;
+    
+    let nameIndex = 0;
+    let subtitleIndex = 0;
+    let nameForward = true;
+    let subtitleForward = true;
+    let subtitleStarted = false;
 
-  // Comment Feature Logic
+    function typeName() {
+      if (nameForward) {
+        nameIndex++;
+        if (nameIndex === nameText.length) {
+          nameForward = false;
+          if (!subtitleStarted) {
+            subtitleStarted = true;
+            typeSubtitle();
+          }
+          setTimeout(typeName, 1000);
+          return;
+        }
+      } else {
+        nameIndex--;
+        if (nameIndex === 0) {
+          nameForward = true;
+          setTimeout(typeName, 500);
+          return;
+        }
+      }
+      typingName.innerHTML = nameText.substring(0, nameIndex) + '<span class="typing-cursor">|</span>';
+      setTimeout(typeName, 150);
+    }
+
+    function typeSubtitle() {
+      if (subtitleForward) {
+        subtitleIndex++;
+        if (subtitleIndex === currentSubtitle.length) {
+          subtitleForward = false;
+          setTimeout(typeSubtitle, 1000);
+          return;
+        }
+      } else {
+        subtitleIndex--;
+        if (subtitleIndex === 0) {
+          subtitleForward = true;
+          setTimeout(typeSubtitle, 500);
+          return;
+        }
+      }
+      typingSubtitle.innerHTML = currentSubtitle.substring(0, subtitleIndex) + '<span class="typing-cursor">|</span>';
+      setTimeout(typeSubtitle, 150);
+    }
+    typeName();
+  }
+
+  function renderProjects(projects) {
+    const projectGrid = document.getElementById('view-projects-grid');
+    const paginationContainer = document.getElementById('projects-pagination');
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const itemsPerPage = 9;
+    let currentPage = 1;
+    let currentFilter = 'semua';
+
+    function updateDisplay() {
+      const filtered = projects.filter(p => currentFilter === 'semua' || p.category === currentFilter);
+      const totalPages = Math.ceil(filtered.length / itemsPerPage);
+      const start = (currentPage - 1) * itemsPerPage;
+      const end = start + itemsPerPage;
+
+      projectGrid.innerHTML = filtered.slice(start, end).map(p => `
+        <div class="project-card" data-category="${p.category}">
+          ${p.mediaType === 'video' 
+            ? `<video src="${p.mediaUrl}" class="project-thumbnail loaded" muted preload="metadata"></video>`
+            : `<img src="${p.mediaUrl}" class="project-thumbnail loaded" loading="lazy">`
+          }
+          <h3>${p.title}</h3>
+          <p>${p.description}</p>
+          <a href="${p.link || '#'}" class="btn detail-btn" data-media="${p.mediaUrl}" data-type="${p.mediaType}">Lihat Detail</a>
+        </div>
+      `).join('');
+      
+      renderPagination(totalPages, currentPage, (page) => {
+        currentPage = page;
+        updateDisplay();
+        document.getElementById('projects').scrollIntoView({ behavior: 'smooth' });
+      });
+      initMediaModal();
+    }
+
+    filterButtons.forEach(btn => {
+      btn.onclick = () => {
+        filterButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentFilter = btn.dataset.filter;
+        currentPage = 1;
+        updateDisplay();
+      };
+    });
+
+    updateDisplay();
+  }
+
+  function renderPagination(totalPages, current, onPageChange) {
+    const container = document.getElementById('projects-pagination');
+    container.innerHTML = '';
+    if (totalPages <= 1) return;
+    for (let i = 1; i <= totalPages; i++) {
+      const btn = document.createElement('button');
+      btn.className = `pagination-btn ${i === current ? 'active' : ''}`;
+      btn.innerText = i;
+      btn.onclick = () => onPageChange(i);
+      container.appendChild(btn);
+    }
+  }
+
+  function initJourneyLoadMore() {
+    const items = document.querySelectorAll('.timeline-item');
+    const btn = document.getElementById('load-more-journey');
+    if (!btn || items.length === 0) return;
+    let visible = 5;
+    const update = () => {
+      items.forEach((item, i) => {
+        item.style.display = i < visible ? 'block' : 'none';
+        item.style.opacity = i < visible ? '1' : '0';
+      });
+      btn.innerText = visible >= items.length ? 'Tampilkan Lebih Sedikit' : 'Pelajari Lebih Lanjut';
+    };
+    btn.onclick = () => {
+      if (visible >= items.length) visible = 5;
+      else visible += 5;
+      update();
+    };
+    update();
+  }
+
+  function initMediaModal() {
+    const modal = document.getElementById('mediaModal');
+    const modalImage = document.getElementById('modalImage');
+    const modalVideo = document.getElementById('modalVideo');
+    const detailBtns = document.querySelectorAll('.detail-btn');
+    
+    detailBtns.forEach(btn => {
+      btn.onclick = (e) => {
+        if (btn.getAttribute('href') !== '#') return;
+        e.preventDefault();
+        const src = btn.dataset.media;
+        const type = btn.dataset.type;
+        if (type === 'image') {
+          modalImage.src = src;
+          modalImage.style.display = 'block';
+          modalVideo.style.display = 'none';
+        } else {
+          modalVideo.querySelector('source').src = src;
+          modalVideo.load();
+          modalVideo.style.display = 'block';
+          modalImage.style.display = 'none';
+        }
+        modal.style.display = 'block';
+      };
+    });
+  }
+
+  loadPortfolioData();
+
+  // --- EXISTING COMMENT LOGIC ---
   const commentForm = document.getElementById('comment-form');
   const commentList = document.getElementById('comment-list');
-  
-  // URL Backend Anda setelah di-deploy nanti
-   const PROD_URL = 'https://backend-rapanportofolio.vercel.app/api'; 
-   const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
-                   ? 'http://localhost:5000/api' 
-                   : PROD_URL;
 
   async function fetchComments() {
     try {
       const response = await fetch(`${API_URL}/comments`);
       const comments = await response.json();
-      
-      commentList.innerHTML = '';
-      if (comments.length === 0) {
-        commentList.innerHTML = '<p class="no-comments">Belum ada komentar. Jadilah yang pertama!</p>';
-        return;
-      }
-
-      comments.forEach(comment => {
-        const date = new Date(comment.createdAt).toLocaleDateString('id-ID', {
-          day: 'numeric',
-          month: 'long',
-          year: 'numeric',
-          hour: '2-digit',
-          minute: '2-digit'
-        });
-
-        const commentElement = document.createElement('div');
-        commentElement.className = 'comment-item';
-        commentElement.innerHTML = `
-          <div class="comment-header">
-            <span class="comment-author">${comment.name}</span>
-            <span class="comment-date">${date}</span>
+      commentList.innerHTML = comments.length === 0 
+        ? '<p class="no-comments">Belum ada komentar. Jadilah yang pertama!</p>'
+        : comments.map(c => `
+          <div class="comment-item">
+            <div class="comment-header">
+              <span class="comment-author">${c.name}</span>
+              <span class="comment-date">${new Date(c.createdAt).toLocaleDateString('id-ID')}</span>
+            </div>
+            <p class="comment-message">${c.message}</p>
           </div>
-          <p class="comment-message">${comment.message}</p>
-        `;
-        commentList.appendChild(commentElement);
-      });
+        `).join('');
     } catch (error) {
-      console.error('Error fetching comments:', error);
-      commentList.innerHTML = '<p class="error-comments">Gagal memuat komentar. Pastikan server backend berjalan.</p>';
+      commentList.innerHTML = '<p class="error-comments">Gagal memuat komentar.</p>';
     }
   }
 
   if (commentForm) {
     commentForm.addEventListener('submit', async (e) => {
       e.preventDefault();
-      
-      const nameInput = document.getElementById('comment-name');
-      const messageInput = document.getElementById('comment-message');
-      
       const commentData = {
-        name: nameInput.value,
-        message: messageInput.value
+        name: document.getElementById('comment-name').value,
+        message: document.getElementById('comment-message').value
       };
-
-      try {
-        const response = await fetch(`${API_URL}/comments`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(commentData)
-        });
-
-        if (response.ok) {
-          nameInput.value = '';
-          messageInput.value = '';
-          fetchComments(); // Refresh list
-        } else {
-          alert('Gagal mengirim komentar.');
-        }
-      } catch (error) {
-        console.error('Error posting comment:', error);
-        alert('Gagal mengirim komentar. Pastikan server backend berjalan.');
+      const response = await fetch(`${API_URL}/comments`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(commentData)
+      });
+      if (response.ok) {
+        document.getElementById('comment-name').value = '';
+        document.getElementById('comment-message').value = '';
+        fetchComments();
       }
     });
-
-    // Initial fetch
     fetchComments();
   }
 });
