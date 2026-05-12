@@ -1,245 +1,276 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // --- DYNAMIC CONTENT FETCHING ---
-  const PROD_URL = 'https://backend-rapanportofolio.vercel.app/api'; 
-  const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
-                  ? 'http://localhost:5000/api' 
-                  : PROD_URL;
+  // GANTI URL DI BAWAH INI DENGAN LINK BACKEND ANDA SETELAH DI-HOSTING
+  // Contoh: 'https://nama-backend-anda.vercel.app/api'
+  const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+    ? 'http://localhost:5000/api'
+    : 'https://backend-rapanportofolio.vercel.app//api'; 
 
-  async function loadPortfolioData() {
-    try {
-      // 1. Fetch Biodata
-      const bioRes = await fetch(`${API_URL}/biodata`);
-      const bioData = await bioRes.json();
-      if (bioData.length > 0) {
-        const bio = bioData[0];
-        document.getElementById('view-bio-header').innerText = bio.name ? 'Biodata' : '';
-        document.getElementById('view-bio-img').src = bio.profileImg || 'assets/Foto Profil.png';
-        document.getElementById('view-bio-description').innerHTML = `<p>${bio.description || ''}</p>`;
-        document.getElementById('view-bio-quote').innerText = bio.quote ? `"${bio.quote}"` : '';
-        
-        // Typing Effect Setup (Re-run with new data)
-        initTypingEffect(bio.name || "Rafan Parsa Putra Rustaman", bio.subtitle || "Pelajar");
-      }
+  // --- TYPING EFFECT ---
+  let nameText = "Rafan Parsa Putra Rustaman";
+  let subtitleTexts = ["Pelajarr", "Freelancee"];
+  let currentSubtitleIndex = 0;
+  let nameIndex = 0;
+  let subtitleIndex = 0;
+  let nameForward = true;
+  let subtitleForward = true;
+  let subtitleStarted = false;
 
-      // 2. Fetch Education
-      const eduRes = await fetch(`${API_URL}/education`);
-      const eduData = await eduRes.json();
-      const eduList = document.getElementById('view-education-list');
-      eduList.innerHTML = eduData.map(edu => `
-        <div class="skill-app">
-          <img src="${edu.logo}" alt="${edu.level}" class="app-logo loaded" loading="lazy">
-          <h3>${edu.schoolName}</h3>
-        </div>
-      `).join('');
-
-      // 3. Fetch Projects
-      const projRes = await fetch(`${API_URL}/projects`);
-      const projData = await projRes.json();
-      renderProjects(projData);
-
-      // 4. Fetch Achievements
-      const achRes = await fetch(`${API_URL}/achievements`);
-      const achData = await achRes.json();
-      const achTimeline = document.getElementById('view-achievements-timeline');
-      achTimeline.innerHTML = achData.map(ach => `
-        <div class="timeline-item ${ach.side || 'left'}">
-          <div class="timeline-date">${ach.date}</div>
-          <div class="timeline-content">
-            <h3>${ach.title}</h3>
-            <p>${ach.description}</p>
-          </div>
-        </div>
-      `).join('');
-      initJourneyLoadMore();
-
-      // 5. Fetch Skills
-      const skillRes = await fetch(`${API_URL}/skills`);
-      const skillData = await skillRes.json();
-      const skillList = document.getElementById('view-skills-list');
-      skillList.innerHTML = skillData.map(s => `
-        <div class="skill-app">
-          <img src="${s.logo}" alt="${s.name}" class="app-logo loaded" loading="lazy">
-        </div>
-      `).join('');
-
-      // 6. Fetch Documentation
-      const docRes = await fetch(`${API_URL}/documentation`);
-      const docData = await docRes.json();
-      const docGrid = document.getElementById('view-documentation-grid');
-      docGrid.innerHTML = docData.map(doc => `
-        <div class="certificate-card">
-          <img src="${doc.imgUrl}" alt="${doc.title}" class="project-thumbnail loaded" loading="lazy">
-          <h3>${doc.title}</h3>
-          <p>${doc.date}</p>
-          <a href="${doc.link}" class="btn" target="_blank">Lihat Dokumentasi</a>
-        </div>
-      `).join('');
-
-      // 7. Fetch Contacts
-      const contactRes = await fetch(`${API_URL}/contacts`);
-      const contactData = await contactRes.json();
-      const contactList = document.getElementById('view-contacts-list');
-      contactList.innerHTML = contactData.map(c => `
-        <a href="${c.url}" target="_blank" class="btn social-icon-link" aria-label="${c.platform}">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-            <path d="${c.iconSvg}"/>
-          </svg>
-          <span>${c.label}</span>
-        </a>
-      `).join('');
-
-    } catch (err) { console.error("Error loading dynamic content:", err); }
-  }
-
-  function initTypingEffect(nameText, currentSubtitle) {
+  function typeName() {
     const typingName = document.getElementById('typing-name');
-    const typingSubtitle = document.getElementById('typing-subtitle');
-    if (!typingName || !typingSubtitle) return;
-    
-    let nameIndex = 0;
-    let subtitleIndex = 0;
-    let nameForward = true;
-    let subtitleForward = true;
-    let subtitleStarted = false;
+    if (!typingName) return;
 
-    function typeName() {
-      if (nameForward) {
-        nameIndex++;
-        if (nameIndex === nameText.length) {
-          nameForward = false;
-          if (!subtitleStarted) {
-            subtitleStarted = true;
-            typeSubtitle();
-          }
-          setTimeout(typeName, 1000);
-          return;
+    if (nameForward) {
+      nameIndex++;
+      if (nameIndex === nameText.length) {
+        nameForward = false;
+        if (!subtitleStarted) {
+          subtitleStarted = true;
+          typeSubtitle();
         }
-      } else {
-        nameIndex--;
-        if (nameIndex === 0) {
-          nameForward = true;
-          setTimeout(typeName, 500);
-          return;
-        }
+        setTimeout(typeName, 1000);
+        return;
       }
-      typingName.innerHTML = nameText.substring(0, nameIndex) + '<span class="typing-cursor">|</span>';
-      setTimeout(typeName, 150);
-    }
-
-    function typeSubtitle() {
-      if (subtitleForward) {
-        subtitleIndex++;
-        if (subtitleIndex === currentSubtitle.length) {
-          subtitleForward = false;
-          setTimeout(typeSubtitle, 1000);
-          return;
-        }
-      } else {
-        subtitleIndex--;
-        if (subtitleIndex === 0) {
-          subtitleForward = true;
-          setTimeout(typeSubtitle, 500);
-          return;
-        }
+    } else {
+      nameIndex--;
+      if (nameIndex === 0) {
+        nameForward = true;
+        setTimeout(typeName, 500);
+        return;
       }
-      typingSubtitle.innerHTML = currentSubtitle.substring(0, subtitleIndex) + '<span class="typing-cursor">|</span>';
-      setTimeout(typeSubtitle, 150);
     }
-    typeName();
+    typingName.innerHTML = nameText.substring(0, nameIndex) + '<span class="typing-cursor">|</span>';
+    setTimeout(typeName, 150);
   }
 
-  function renderProjects(projects) {
-    const projectGrid = document.getElementById('view-projects-grid');
-    const paginationContainer = document.getElementById('projects-pagination');
-    const filterButtons = document.querySelectorAll('.filter-btn');
-    const itemsPerPage = 9;
-    let currentPage = 1;
-    let currentFilter = 'semua';
+  function typeSubtitle() {
+    const typingSubtitle = document.getElementById('typing-subtitle');
+    if (!typingSubtitle) return;
 
-    function updateDisplay() {
-      const filtered = projects.filter(p => currentFilter === 'semua' || p.category === currentFilter);
-      const totalPages = Math.ceil(filtered.length / itemsPerPage);
-      const start = (currentPage - 1) * itemsPerPage;
-      const end = start + itemsPerPage;
+    const currentSubtitle = subtitleTexts[currentSubtitleIndex];
 
-      projectGrid.innerHTML = filtered.slice(start, end).map(p => `
-        <div class="project-card" data-category="${p.category}">
-          ${p.mediaType === 'video' 
-            ? `<video src="${p.mediaUrl}" class="project-thumbnail loaded" muted preload="metadata"></video>`
-            : `<img src="${p.mediaUrl}" class="project-thumbnail loaded" loading="lazy">`
-          }
-          <h3>${p.title}</h3>
-          <p>${p.description}</p>
-          <a href="${p.link || '#'}" class="btn detail-btn" data-media="${p.mediaUrl}" data-type="${p.mediaType}">Lihat Detail</a>
-        </div>
-      `).join('');
-      
-      renderPagination(totalPages, currentPage, (page) => {
-        currentPage = page;
-        updateDisplay();
-        document.getElementById('projects').scrollIntoView({ behavior: 'smooth' });
-      });
-      initMediaModal();
+    if (subtitleForward) {
+      subtitleIndex++;
+      if (subtitleIndex === currentSubtitle.length) {
+        subtitleForward = false;
+        setTimeout(typeSubtitle, 1000);
+        return;
+      }
+    } else {
+      subtitleIndex--;
+      if (subtitleIndex === 0) {
+        currentSubtitleIndex = (currentSubtitleIndex + 1) % subtitleTexts.length;
+        subtitleForward = true;
+        setTimeout(typeSubtitle, 500);
+        return;
+      }
     }
+    typingSubtitle.innerHTML = currentSubtitle.substring(0, subtitleIndex) + '<span class="typing-cursor">|</span>';
+    setTimeout(typeSubtitle, 150);
+  }
 
-    filterButtons.forEach(btn => {
-      btn.onclick = () => {
-        filterButtons.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        currentFilter = btn.dataset.filter;
-        currentPage = 1;
-        updateDisplay();
-      };
+  // --- FETCH & RENDER DATA ---
+  
+  // 1. BIODATA
+  async function loadBiodata() {
+    try {
+      const res = await fetch(`${API_URL}/biodata`);
+      const data = await res.json();
+      if (data) {
+        nameText = data.name || nameText;
+        subtitleTexts = [data.subtitle || "Pelajar", "Freelance"];
+        
+        const container = document.getElementById('biodata-container');
+        container.innerHTML = `
+          <div class="profile-img-wrapper">
+              <img src="${data.profileImage || 'assets/Foto Profil.png'}" alt="Foto Profil" class="profile-img" loading="lazy">
+          </div>
+          <div class="biodata-text">
+              <h3 id="typing-name"></h3>
+              <h4 id="typing-subtitle"></h4>
+              <p>${data.description || ''}</p>
+              ${data.quote ? `<p><b>"${data.quote}"</b></p>` : ''}
+          </div>
+        `;
+        // Restart typing effect after container is replaced
+        nameIndex = 0;
+        subtitleIndex = 0;
+        subtitleStarted = false;
+        typeName();
+      } else {
+        typeName(); // Fallback to defaults
+      }
+    } catch (err) {
+      console.error('Error loading biodata:', err);
+      typeName();
+    }
+  }
+
+  // 2. EDUCATION
+  async function loadEducation() {
+    try {
+      const res = await fetch(`${API_URL}/education`);
+      const data = await res.json();
+      const container = document.getElementById('education-container');
+      if (data && data.length > 0) {
+        container.innerHTML = '';
+        data.forEach(edu => {
+          container.innerHTML += `
+            <div class="skill-app">
+                <img src="${edu.logo}" alt="${edu.level}" class="app-logo" loading="lazy">
+                <h3>${edu.schoolName}</h3>
+            </div>
+          `;
+        });
+      }
+    } catch (err) {
+      console.error('Error loading education:', err);
+    }
+  }
+
+  // 3. PROJECTS (with filtering and pagination)
+  let allProjects = [];
+  let currentFilter = 'semua';
+  let currentPage = 1;
+  const itemsPerPage = 9;
+
+  async function loadProjects() {
+    try {
+      const res = await fetch(`${API_URL}/projects`);
+      allProjects = await res.json();
+      updateProjectsDisplay();
+    } catch (err) {
+      console.error('Error loading projects:', err);
+    }
+  }
+
+  function updateProjectsDisplay() {
+    const grid = document.getElementById('projects-grid');
+    const filtered = allProjects.filter(p => currentFilter === 'semua' || p.category === currentFilter);
+    const totalPages = Math.ceil(filtered.length / itemsPerPage);
+    
+    if (currentPage > totalPages && totalPages > 0) currentPage = totalPages;
+    
+    const start = (currentPage - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
+    const paginated = filtered.slice(start, end);
+
+    grid.innerHTML = '';
+    paginated.forEach(p => {
+      const card = document.createElement('div');
+      card.className = 'project-card';
+      card.setAttribute('data-category', p.category);
+      
+      let mediaHtml = '';
+      if (p.mediaType === 'video') {
+        mediaHtml = `<video src="${p.mediaUrl}" class="project-thumbnail" muted preload="metadata"></video>`;
+      } else {
+        mediaHtml = `<img src="${p.mediaUrl}" alt="${p.title}" class="project-thumbnail" loading="lazy">`;
+      }
+
+      card.innerHTML = `
+        ${mediaHtml}
+        <h3>${p.title}</h3>
+        <p>${p.description}</p>
+        <div class="project-actions">
+          <a href="#" class="btn detail-btn" data-media="${p.mediaUrl}" data-type="${p.mediaType}">Lihat Detail</a>
+          ${p.link ? `<a href="${p.link}" class="btn" target="_blank">Kunjungi</a>` : ''}
+        </div>
+      `;
+      grid.appendChild(card);
     });
 
-    updateDisplay();
+    renderPagination(totalPages);
+    setupModalEvents();
   }
 
-  function renderPagination(totalPages, current, onPageChange) {
+  function renderPagination(totalPages) {
     const container = document.getElementById('projects-pagination');
     container.innerHTML = '';
     if (totalPages <= 1) return;
-    for (let i = 1; i <= totalPages; i++) {
+
+    const createBtn = (text, page, active = false, disabled = false) => {
       const btn = document.createElement('button');
-      btn.className = `pagination-btn ${i === current ? 'active' : ''}`;
-      btn.innerText = i;
-      btn.onclick = () => onPageChange(i);
-      container.appendChild(btn);
+      btn.className = `pagination-btn ${active ? 'active' : ''}`;
+      btn.innerHTML = text;
+      btn.disabled = disabled;
+      btn.onclick = () => {
+        currentPage = page;
+        updateProjectsDisplay();
+        document.getElementById('projects').scrollIntoView({ behavior: 'smooth' });
+      };
+      return btn;
+    };
+
+    container.appendChild(createBtn('«', 1, false, currentPage === 1));
+    for (let i = 1; i <= totalPages; i++) {
+      container.appendChild(createBtn(i, i, i === currentPage));
+    }
+    container.appendChild(createBtn('»', totalPages, false, currentPage === totalPages));
+  }
+
+  // 4. ACHIEVEMENTS (Journey)
+  async function loadAchievements() {
+    try {
+      const res = await fetch(`${API_URL}/achievements`);
+      const data = await res.json();
+      const container = document.getElementById('journey-timeline');
+      if (data && data.length > 0) {
+        container.innerHTML = '';
+        data.forEach((ach, index) => {
+          const side = ach.side || (index % 2 === 0 ? 'left' : 'right');
+          container.innerHTML += `
+            <div class="timeline-item ${side}">
+                <div class="timeline-date">${ach.date}</div>
+                <div class="timeline-content">
+                    <h3>${ach.title}</h3>
+                    <p>${ach.description}</p>
+                </div>
+            </div>
+          `;
+        });
+        updateJourneyVisibility();
+      }
+    } catch (err) {
+      console.error('Error loading achievements:', err);
     }
   }
 
-  function initJourneyLoadMore() {
-    const items = document.querySelectorAll('.timeline-item');
-    const btn = document.getElementById('load-more-journey');
-    if (!btn || items.length === 0) return;
-    let visible = 5;
-    const update = () => {
-      items.forEach((item, i) => {
-        item.style.display = i < visible ? 'block' : 'none';
-        item.style.opacity = i < visible ? '1' : '0';
-      });
-      btn.innerText = visible >= items.length ? 'Tampilkan Lebih Sedikit' : 'Pelajari Lebih Lanjut';
-    };
-    btn.onclick = () => {
-      if (visible >= items.length) visible = 5;
-      else visible += 5;
-      update();
-    };
-    update();
+  // 5. SKILLS
+  async function loadSkills() {
+    try {
+      const res = await fetch(`${API_URL}/skills`);
+      const data = await res.json();
+      const container = document.getElementById('skills-container');
+      if (data && data.length > 0) {
+        container.innerHTML = '';
+        data.forEach(skill => {
+          container.innerHTML += `
+            <div class="skill-app">
+                <img src="${skill.logo}" alt="${skill.name}" class="app-logo" loading="lazy">
+                <h3>${skill.name}</h3>
+            </div>
+          `;
+        });
+      }
+    } catch (err) {
+      console.error('Error loading skills:', err);
+    }
   }
 
-  function initMediaModal() {
+  // --- MODAL & EVENTS ---
+  function setupModalEvents() {
     const modal = document.getElementById('mediaModal');
     const modalImage = document.getElementById('modalImage');
     const modalVideo = document.getElementById('modalVideo');
+    const closeModal = document.querySelector('.close-modal');
     const detailBtns = document.querySelectorAll('.detail-btn');
-    
+
     detailBtns.forEach(btn => {
       btn.onclick = (e) => {
-        if (btn.getAttribute('href') !== '#') return;
         e.preventDefault();
-        const src = btn.dataset.media;
-        const type = btn.dataset.type;
+        const src = btn.getAttribute('data-media');
+        const type = btn.getAttribute('data-type');
+
         if (type === 'image') {
           modalImage.src = src;
           modalImage.style.display = 'block';
@@ -253,52 +284,125 @@ document.addEventListener('DOMContentLoaded', () => {
         modal.style.display = 'block';
       };
     });
+
+    closeModal.onclick = () => {
+      modal.style.display = 'none';
+      modalVideo.pause();
+    };
+    
+    window.onclick = (e) => {
+      if (e.target === modal) {
+        modal.style.display = 'none';
+        modalVideo.pause();
+      }
+    };
   }
 
-  loadPortfolioData();
+  // Journey visibility logic
+  const itemsPerLoad = 5;
+  let visibleItemsCount = itemsPerLoad;
 
-  // --- EXISTING COMMENT LOGIC ---
+  function updateJourneyVisibility() {
+    const journeyItems = document.querySelectorAll('.timeline-item');
+    const loadMoreBtn = document.getElementById('load-more-journey');
+    if (!loadMoreBtn) return;
+
+    journeyItems.forEach((item, index) => {
+      if (index < visibleItemsCount) {
+        item.style.display = 'block';
+        item.style.opacity = '1';
+        item.style.transform = 'translateY(0)';
+      } else {
+        item.style.display = 'none';
+      }
+    });
+
+    if (visibleItemsCount >= journeyItems.length) {
+      loadMoreBtn.innerText = 'Tampilkan Lebih Sedikit';
+    } else {
+      loadMoreBtn.innerText = 'Pelajari Lebih Lanjut';
+    }
+  }
+
+  document.getElementById('load-more-journey').onclick = () => {
+    const journeyItems = document.querySelectorAll('.timeline-item');
+    if (visibleItemsCount >= journeyItems.length) {
+      visibleItemsCount = itemsPerLoad;
+      document.getElementById('journey').scrollIntoView({ behavior: 'smooth' });
+    } else {
+      visibleItemsCount += itemsPerLoad;
+    }
+    updateJourneyVisibility();
+  };
+
+  // Filter buttons
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.onclick = () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentFilter = btn.getAttribute('data-filter');
+      currentPage = 1;
+      updateProjectsDisplay();
+    };
+  });
+
+  // Mobile Navbar
+  const hamburger = document.querySelector('.hamburger');
+  const navMenu = document.querySelector('.nav-menu');
+  hamburger.onclick = () => {
+    hamburger.classList.toggle('active');
+    navMenu.classList.toggle('active');
+  };
+  navMenu.onclick = (e) => {
+    if (e.target.tagName === 'A') {
+      hamburger.classList.remove('active');
+      navMenu.classList.remove('active');
+    }
+  };
+
+  // --- COMMENTS ---
   const commentForm = document.getElementById('comment-form');
   const commentList = document.getElementById('comment-list');
 
   async function fetchComments() {
     try {
-      const response = await fetch(`${API_URL}/comments`);
-      const comments = await response.json();
-      commentList.innerHTML = comments.length === 0 
-        ? '<p class="no-comments">Belum ada komentar. Jadilah yang pertama!</p>'
-        : comments.map(c => `
+      const res = await fetch(`${API_URL}/comments`);
+      const comments = await res.json();
+      commentList.innerHTML = comments.length ? '' : '<p class="no-comments">Belum ada komentar.</p>';
+      comments.forEach(c => {
+        const date = new Date(c.createdAt).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+        commentList.innerHTML += `
           <div class="comment-item">
-            <div class="comment-header">
-              <span class="comment-author">${c.name}</span>
-              <span class="comment-date">${new Date(c.createdAt).toLocaleDateString('id-ID')}</span>
-            </div>
+            <div class="comment-header"><span class="comment-author">${c.name}</span><span class="comment-date">${date}</span></div>
             <p class="comment-message">${c.message}</p>
           </div>
-        `).join('');
-    } catch (error) {
-      commentList.innerHTML = '<p class="error-comments">Gagal memuat komentar.</p>';
+        `;
+      });
+    } catch (err) {
+      commentList.innerHTML = '<p class="error">Gagal memuat komentar.</p>';
     }
   }
 
-  if (commentForm) {
-    commentForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const commentData = {
-        name: document.getElementById('comment-name').value,
-        message: document.getElementById('comment-message').value
-      };
-      const response = await fetch(`${API_URL}/comments`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(commentData)
-      });
-      if (response.ok) {
-        document.getElementById('comment-name').value = '';
-        document.getElementById('comment-message').value = '';
-        fetchComments();
-      }
+  commentForm.onsubmit = async (e) => {
+    e.preventDefault();
+    const name = document.getElementById('comment-name').value;
+    const message = document.getElementById('comment-message').value;
+    const res = await fetch(`${API_URL}/comments`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, message })
     });
-    fetchComments();
-  }
+    if (res.ok) {
+      commentForm.reset();
+      fetchComments();
+    }
+  };
+
+  // --- INITIALIZE ---
+  loadBiodata();
+  loadEducation();
+  loadProjects();
+  loadAchievements();
+  loadSkills();
+  fetchComments();
 });
