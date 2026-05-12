@@ -2,8 +2,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // GANTI URL DI BAWAH INI DENGAN LINK BACKEND ANDA SETELAH DI-HOSTING
   // Contoh: 'https://nama-backend-anda.vercel.app/api'
   const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-    ? 'http://localhost:5000/api'
-    : 'https://backend-rapanportofolio.vercel.app//api'; 
+      ? 'http://localhost:5000/api'
+      : 'https://backend-rapanportofolio.vercel.app/api'; 
 
   // --- TYPING EFFECT ---
   let nameText = "Rafan Parsa Putra Rustaman";
