@@ -137,6 +137,10 @@ function startTypingEffect(name, subtitle) {
     const typingSubtitle = document.getElementById('typing-subtitle');
     if (!typingName || !typingSubtitle) return;
 
+    // Handle multiple subtitles if comma-separated
+    const subtitles = subtitle.split(',').map(s => s.trim());
+    let currentSubtitleIndex = 0;
+
     let nameIndex = 0;
     let subtitleIndex = 0;
     let nameForward = true;
@@ -163,9 +167,10 @@ function startTypingEffect(name, subtitle) {
     }
 
     function typeSubtitle() {
+        const text = subtitles[currentSubtitleIndex];
         if (subtitleForward) {
             subtitleIndex++;
-            if (subtitleIndex === subtitle.length) {
+            if (subtitleIndex === text.length) {
                 subtitleForward = false;
                 setTimeout(typeSubtitle, 2000);
                 return;
@@ -174,12 +179,14 @@ function startTypingEffect(name, subtitle) {
             subtitleIndex--;
             if (subtitleIndex === 0) {
                 subtitleForward = true;
+                // Move to next subtitle
+                currentSubtitleIndex = (currentSubtitleIndex + 1) % subtitles.length;
                 setTimeout(typeSubtitle, 500);
                 return;
             }
         }
-        typingSubtitle.innerHTML = subtitle.substring(0, subtitleIndex) + '<span class="typing-cursor">|</span>';
-        setTimeout(typeSubtitle, 150);
+        typingSubtitle.innerHTML = text.substring(0, subtitleIndex) + '<span class="typing-cursor">|</span>';
+        setTimeout(typeSubtitle, 100);
     }
 
     typeName();
